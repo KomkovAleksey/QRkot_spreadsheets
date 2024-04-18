@@ -7,7 +7,7 @@ from app.core.constants import ErrorText
 from app.crud import charity_project_crud
 
 
-async def get_object_from_db(
+async def get_object_or_404(
     obj_id: int,
     session: AsyncSession,
 ):
