@@ -17,6 +17,7 @@
 - SQLalchemy 1.4.36
 - Alembic 1.7.7
 - Uvicorn 0.17.6
+- Google API
 
 ## Описание проекта:
 
@@ -94,6 +95,18 @@ SECRET=
 APP_TITLE=
 FIRST_SUPERUSER_EMAIL=
 FIRST_SUPERUSER_PASSWORD=
+# Данные вашего сервисного аккаунта
+TYPE=
+PROJECT_ID=
+PRIVATE_KEY_ID=
+PRIVATE_KEY=
+CLIENT_EMAIL=
+CLIENT_ID=
+AUTH_URI=
+TOKEN_URI=
+AUTH_PROVIDER_X509_CERT_URL=
+CLIENT_X509_CERT_URL=
+EMAIL=
 ```
 В корневой папке есть файл .env.example,
 с примером того как надо заполнять .env файл.
