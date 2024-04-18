@@ -9,6 +9,11 @@ MIN_ANYSTR_LENGTH = 1
 TOKEN_VALIdITY_PERIOD = 3600
 MIN_LEN_PASSWORD = 3
 
+FORMAT = "%Y/%m/%d %H:%M:%S"
+COLUMNS = 5
+ROWS = 100
+RANGE = 'A1:C30'
+
 
 class ErrorText():
     """Текст ошибок."""
