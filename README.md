@@ -1,4 +1,4 @@
-# 😺 [QRKot](https://github.com/KomkovAleksey/cat_charity_fund)
+# 😺 [QRKot](https://github.com/KomkovAleksey/QRkot_spreadsheets)
 
 
 ## Оглавление
