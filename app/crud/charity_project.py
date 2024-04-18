@@ -1,7 +1,7 @@
 """
 Модуль CRUD операций модели 'CharityProject'.
 """
-from sqlalchemy import select
+from sqlalchemy import select, extract
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base import CRUDBase
@@ -25,6 +25,21 @@ class CRUDCharityProject(CRUDBase):
         charity_project = charity_project.scalars().first()
 
         return charity_project
+    
+    async def get_projects_by_completion_rate(
+        session: AsyncSession
+    ):
+        """
+        Возвращает список проектов отсортированный
+        по времени понадобившимся для сбора средств.
+        """
+        completion_rate = extract(
+            "epoch", CharityProject.close_date
+        ) - extract("epoch", CharityProject.create_date)
+        projects = await session.execute(
+            select(CharityProject).where(CharityProject.fully_invested)
+        ).order_by(completion_rate)
+        return projects.scalars().all()
 
 
 charity_project_crud = CRUDCharityProject(CharityProject)
