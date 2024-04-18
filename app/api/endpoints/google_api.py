@@ -10,7 +10,7 @@ from app.core.google_client import get_service
 from app.core.user import current_superuser
 from app.schemas.charity_project import CharityProjectDB
 from app.crud.charity_project import charity_project_crud
-from app.services import (
+from app.services.google_service import (
     set_user_permissions,
     spreadsheets_create,
     spreadsheets_update_value,
@@ -45,5 +45,5 @@ async def get_report(
         project,
         wrapper_services,
     )
-    
+
     return project

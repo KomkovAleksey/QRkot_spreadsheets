@@ -29,7 +29,7 @@ async def spreadsheets_create(wrapper_services: Aiogoogle):
         service.spreadsheets.create(json=spreadsheet_body)
     )
     spreadsheet_id = response['spreadsheetId']
-    return spreadsheet_id 
+    return spreadsheet_id
 
 
 async def set_user_permissions(
@@ -49,8 +49,8 @@ async def set_user_permissions(
             fileId=spreadsheet_id,
             json=permissions_body,
             fields="id"
-        )) 
-    
+        ))
+
 
 async def spreadsheets_update_value(
         spreadsheetid: str,
@@ -69,7 +69,7 @@ async def spreadsheets_update_value(
     ]
     for project in projects:
         new_row = [
-            str(project.name), 
+            str(project.name),
             str(project.close_date - project.create_date),
             str(project.description),
         ]
