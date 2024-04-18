@@ -8,7 +8,7 @@ from app.core.db import get_async_session
 from app.core.user import current_user, current_superuser
 from app.crud import donation_crud
 from app.models import User
-from app.services import CharityProjectService
+from app.services import investmentService
 from app.schemas.donation import (
     DonationDBFull,
     DonationDBShort,
@@ -58,4 +58,4 @@ async def create_donation(
     user: User = Depends(current_user)
 ):
     """POST-запрос на создание пожертвования."""
-    return await CharityProjectService(session).create_donation(obj_in, user)
+    return await investmentService(session).create_donation(obj_in, user)

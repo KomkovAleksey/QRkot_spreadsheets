@@ -20,7 +20,7 @@ from app.schemas.charity_project import (
 from app.schemas.donation import DonationCreate
 
 
-class CharityProjectService:
+class investmentService:
     def __init__(self, session: AsyncSession):
         self.session = session
 

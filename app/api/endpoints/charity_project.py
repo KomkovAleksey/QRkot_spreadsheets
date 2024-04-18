@@ -13,7 +13,7 @@ from app.schemas.charity_project import (
     CharityProjectCreate,
     CharityProjectUpdate,
 )
-from app.services.charity_project import CharityProjectService
+from app.services import investmentService
 
 router = APIRouter()
 
@@ -32,7 +32,7 @@ async def create_charity_project(
     POST-запрос на создание благотворительного проекта.
     Только для суперюзеров.
     """
-    return await CharityProjectService(
+    return await investmentService(
         session
     ).create_charity_project(obj_in)
 
@@ -63,7 +63,7 @@ async def delete_project(
     Только для суперюзеров.
     """
     charity_project = await get_object_or_404(project_id, session)
-    return await CharityProjectService(
+    return await investmentService(
         session
     ).remove_charity_project(charity_project)
 
@@ -84,6 +84,6 @@ async def partially_update_charity_project(
     Только для суперюзеров.
     """
     charity_project = await get_object_or_404(project_id, session)
-    return await CharityProjectService(
+    return await investmentService(
         session
     ).update_charity_project(project_id, obj_in, charity_project)
