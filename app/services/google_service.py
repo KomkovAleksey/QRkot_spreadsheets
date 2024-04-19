@@ -8,12 +8,12 @@ from aiogoogle import Aiogoogle
 
 from app.models import CharityProject
 from app.core.config import settings
-from app.core.constants import FORMAT, COLUMNS, ROWS, RANGE
+from app.core.constants import DATE_TIME_FORMAT, COLUMNS, ROWS, RANGE
 
 
-async def spreadsheets_create(wrapper_services: Aiogoogle):
+async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
     """Функция создания таблицы."""
-    now_date_time = datetime.now().strftime(FORMAT)
+    now_date_time = datetime.now().strftime(DATE_TIME_FORMAT)
     service = await wrapper_services.discover('sheets', 'v4')
     spreadsheet_body = {
         'properties': {'title': f'Отчёт от {now_date_time}',
@@ -28,8 +28,8 @@ async def spreadsheets_create(wrapper_services: Aiogoogle):
     response = await wrapper_services.as_service_account(
         service.spreadsheets.create(json=spreadsheet_body)
     )
-    spreadsheet_id = response['spreadsheetId']
-    return spreadsheet_id
+    
+    return response['spreadsheetId']
 
 
 async def set_user_permissions(
@@ -60,7 +60,7 @@ async def spreadsheets_update_value(
     """
     Записывает полученную из базы данных информацию в документ с таблицами.
     """
-    now_date_time = datetime.now().strftime(FORMAT)
+    now_date_time = datetime.now().strftime(DATE_TIME_FORMAT)
     service = await wrapper_services.discover('sheets', 'v4')
     table_values = [
         ['Отчёт от', now_date_time],

@@ -15,7 +15,7 @@ class CRUDCharityProject(CRUDBase):
             self,
             project_name: str,
             session: AsyncSession,
-    ):
+    ) -> CharityProject:
         """Получение объекта CharityProject по имени."""
         charity_project = await session.execute(
             select(CharityProject.id).where(
@@ -28,17 +28,18 @@ class CRUDCharityProject(CRUDBase):
 
     async def get_projects_by_completion_rate(
         session: AsyncSession
-    ):
+    ) -> list[CharityProject]:
         """
         Возвращает список проектов отсортированный
         по времени понадобившимся для сбора средств.
         """
         completion_rate = extract(
-            "epoch", CharityProject.close_date
-        ) - extract("epoch", CharityProject.create_date)
+            'epoch', CharityProject.close_date
+        ) - extract('epoch', CharityProject.create_date)
         projects = await session.execute(
             select(CharityProject).where(CharityProject.fully_invested)
         ).order_by(completion_rate)
+        
         return projects.scalars().all()
 
 

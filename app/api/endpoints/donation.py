@@ -25,7 +25,7 @@ router = APIRouter()
 )
 async def get_all_donations(
     session: AsyncSession = Depends(get_async_session),
-):
+) -> list[DonationDBFull]:
     """
     GET-запрос на получение списка всех пожертвований.
     Только для суперюзеров.
@@ -42,7 +42,7 @@ async def get_all_donations(
 async def get_my_donations(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user)
-):
+) -> list[DonationDBShort]:
     """GET-запрос на получение списка пожертвований пользователя."""
     return await donation_crud.get_by_user(user, session)
 
@@ -56,6 +56,6 @@ async def create_donation(
     obj_in: DonationCreate,
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user)
-):
+) -> DonationDBShort:
     """POST-запрос на создание пожертвования."""
     return await investmentService(session).create_donation(obj_in, user)

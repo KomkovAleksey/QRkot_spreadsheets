@@ -5,14 +5,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.constants import ErrorText
 from app.crud import charity_project_crud
+from app.models import CharityProject
 
 
-async def get_object_or_404(
+async def get_project_or_404(
     obj_id: int,
     session: AsyncSession,
-):
+) -> CharityProject:
     """
-    Достает обьект из бд.
+    Достает проект из бд.
     Если его нет вызывает исключение.
     """
     charity_project = await charity_project_crud.get(

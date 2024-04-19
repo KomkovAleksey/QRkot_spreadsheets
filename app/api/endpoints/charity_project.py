@@ -4,7 +4,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.utils import get_object_or_404
+from app.api.utils import get_project_or_404
 from app.core.db import get_async_session
 from app.core.user import current_superuser
 from app.crud import charity_project_crud
@@ -27,7 +27,7 @@ router = APIRouter()
 async def create_charity_project(
     obj_in: CharityProjectCreate,
     session: AsyncSession = Depends(get_async_session),
-):
+) -> CharityProjectDB:
     """
     POST-запрос на создание благотворительного проекта.
     Только для суперюзеров.
@@ -44,7 +44,7 @@ async def create_charity_project(
 )
 async def get_all_charity_project(
     session: AsyncSession = Depends(get_async_session),
-):
+) -> list[CharityProjectDB]:
     """GET-запрос на получение списка всех благотворительных проектов."""
     return await charity_project_crud.get_multi(session)
 
@@ -57,12 +57,12 @@ async def get_all_charity_project(
 async def delete_project(
     project_id: int,
     session: AsyncSession = Depends(get_async_session),
-):
+) -> CharityProjectDB:
     """
     DELETE-запрос на удаление благотворительного проекта.
     Только для суперюзеров.
     """
-    charity_project = await get_object_or_404(project_id, session)
+    charity_project = await get_project_or_404(project_id, session)
     return await investmentService(
         session
     ).remove_charity_project(charity_project)
@@ -78,12 +78,12 @@ async def partially_update_charity_project(
     project_id: int,
     obj_in: CharityProjectUpdate,
     session: AsyncSession = Depends(get_async_session),
-):
+) -> CharityProjectDB:
     """
     PATCH-запрос на редактирование благотворительного проекта.
     Только для суперюзеров.
     """
-    charity_project = await get_object_or_404(project_id, session)
+    charity_project = await get_project_or_404(project_id, session)
     return await investmentService(
         session
     ).update_charity_project(project_id, obj_in, charity_project)

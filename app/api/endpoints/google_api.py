@@ -28,7 +28,7 @@ async def get_report(
         session: AsyncSession = Depends(get_async_session),
         wrapper_services: Aiogoogle = Depends(get_service)
 
-):
+) -> list[CharityProjectDB]:
     """
     Создание отчёта в Google таблицу
     с закрытыми проектами отсортированными

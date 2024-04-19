@@ -41,7 +41,7 @@ class investmentService:
                 detail=ErrorText.NAME_DUPLICATE,
             )
 
-    async def check_unclosed_donation(
+    async def investing_in_unclosed_donation(
             self,
             charity_project,
     ):
@@ -60,7 +60,7 @@ class investmentService:
         self,
         target: AbstractProjectDonation,
         sources: list[AbstractProjectDonation],
-    ):
+    ) -> list:
         """Инвестирование в незакрытые проекты."""
         changed = []
         for source in sources:
@@ -154,7 +154,7 @@ class investmentService:
             obj_in,
             self.session
         )
-        await self.check_unclosed_donation(charity_project)
+        await self.investing_in_unclosed_donation(charity_project)
 
         return charity_project
 
@@ -168,7 +168,7 @@ class investmentService:
             charity_project,
             self.session
         )
-        await self.check_unclosed_donation(charity_project)
+        await self.investing_in_unclosed_donation(charity_project)
 
         return charity_project
 

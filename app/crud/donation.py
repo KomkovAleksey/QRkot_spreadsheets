@@ -15,7 +15,7 @@ class CRUDDonation(CRUDBase):
         self,
         user: User,
         session: AsyncSession,
-    ):
+    ) -> list[Donation]:
         """
         Получение списка объектов Donation,
         сделанных пользователем.
