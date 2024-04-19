@@ -39,7 +39,7 @@ class CRUDCharityProject(CRUDBase):
         projects = await session.execute(
             select(CharityProject).where(CharityProject.fully_invested)
         ).order_by(completion_rate)
-        
+    
         return projects.scalars().all()
 
 
