@@ -11,8 +11,8 @@ MIN_LEN_PASSWORD = 3
 
 DATE_TIME_FORMAT = "%Y/%m/%d %H:%M:%S"
 # Дата для заголовка таблицы в Google API
-COLUMNS = 5 # Колонки таблицы в Google API
-ROWS = 100 # Ряды таблицы в Google API
+COLUMNS = 5  # Колонки таблицы в Google API
+ROWS = 100  # Ряды таблицы в Google API
 RANGE = 'A1:C30'
 
 
