@@ -1,26 +1,29 @@
 """
 Модуль для базового класса CRUD операций моделей приложения 'QRKot'
 """
-from typing import Optional
+from typing import Optional, TypeVar, Union
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select, not_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import User
+from app.core.db import Base
+
+ModelType = TypeVar('ModelType', bound=Base)
 
 
 class CRUDBase:
     """Базовый класс CRUD."""
 
-    def __init__(self, model):
+    def __init__(self, model: ModelType):
         self.model = model
 
     async def get(
             self,
             obj_id: int,
             session: AsyncSession,
-    ):
+    ) -> Union[None, ModelType]:
         """Получение объекта модели по его id."""
         db_obj = await session.execute(
             select(self.model).where(
@@ -33,7 +36,7 @@ class CRUDBase:
     async def get_multi(
             self,
             session: AsyncSession
-    ):
+    ) -> list[ModelType]:
         """Получение списка данных всех объектов."""
         db_objs = await session.execute(select(self.model))
 
@@ -44,7 +47,7 @@ class CRUDBase:
             obj_in,
             session: AsyncSession,
             user: Optional[User] = None
-    ):
+    ) -> ModelType:
         """Создание объекта модели."""
         obj_in_data = obj_in.dict()
         if user is not None:
@@ -61,7 +64,7 @@ class CRUDBase:
             db_obj,
             obj_in,
             session: AsyncSession,
-    ):
+    ) -> ModelType:
         """Обновление объекта модели."""
         obj_data = jsonable_encoder(db_obj)
         update_data = obj_in.dict(exclude_unset=True)
@@ -78,7 +81,7 @@ class CRUDBase:
             self,
             db_obj,
             session: AsyncSession,
-    ):
+    ) -> ModelType:
         """Удаление объекта модели."""
         await session.delete(db_obj)
         await session.commit()
@@ -88,7 +91,7 @@ class CRUDBase:
     async def get_opened(
         self,
         session: AsyncSession
-    ):
+    ) -> Union[ModelType, list[ModelType]]:
         """
         Получение списка объектов модели
         со значение поля fully_invested равным False.
